@@ -1,0 +1,13 @@
+html
+  head
+    title= title
+    script(src='https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js')
+    script(src='/spotify-web-api.js')
+    script(src='/main.js')
+
+
+  body
+    <a href="/login" class="btn btn-primary">Log in with Spotify</a>
+    h1= title
+
+    <div id="spotify-player"></div>
