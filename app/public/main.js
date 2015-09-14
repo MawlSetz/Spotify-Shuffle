@@ -26,7 +26,7 @@ function getSongs(api, token, page, playlist) {
     }
 
     // Todo - Update nmercer88
-    api.getPlaylistTracks('nmercer88', playlist.id, {offset: page, limit: 50}).then(function(data) {
+    api.getPlaylistTracks('setzerml', playlist.id, {offset: page, limit: 50}).then(function(data) {
         songs.push.apply(songs, data.items);
 
         if (data.items.length >= 50) {
@@ -59,7 +59,7 @@ function getSongs(api, token, page, playlist) {
 
 // Todo - Update nmercer88
 function getPlaylists(api, token, page) {
-    api.getUserPlaylists('nmercer88', {offset: page, limit: 50}).then(function(data) {
+    api.getUserPlaylists('setzerml', {offset: page, limit: 50}).then(function(data) {
         playlists.push.apply(playlists, data.items);
 
         // Todo Change the 50 to a hardcoded variable at the top. Change it everywhere you see 50.

@@ -2,8 +2,8 @@ var express = require('express');
 var request = require('request');
 var querystring = require('querystring');
 
-var client_id = 'a011b217cb2f4e339911c45aa5351b59'; // Todo - Change Me
-var client_secret = 'fb79fcb836264e538afdcc49ff640140'; // Todo - Change Me
+var client_id = '42b90932c49944f48758b87b7b021f7e'; // Todo - Change Me
+var client_secret = '332388211e874073b6a42bdec032bb92'; // Todo - Change Me
 var redirect_uri = 'http://localhost:8888/callback/';
 
 var generateRandomString = function(length) {
