@@ -92,16 +92,21 @@ $(function(){
     // Todo - Change all nmercer88's to your username
     // Todo - Make a call to spotify to get user name based off access_token spotifyApi.getMe(), save it.
 
-    function getUser(api, token, page){
+    function getUser(api, access_token, page){
         if(access_token){
-        spotifyApi.getMe()
-             .then(function(data) {
-                console.log('Some information about the authenticated user', data.body);
-                console.log(data.body);
-            }, function(err) {
-                console.log('Something went wrong!', err);
-            });
-         }
+            spotifyApi.getMe()
+                 .then(function(data) {
+                    // var user_id =
+                    console.log(data);
+                    console.log('Some information about the authenticated user', data.body);
+                    console.log(data.body);
+                }, function(err) {
+                    console.log('Something went wrong!', err);
+                });
+             } else {
+                console.log('err');
+             }
+     }
         
     // Todo - Testing - Uncomment this to make it actually do the loopup on songs. For now we will fake it for testing.
     // getPlaylists(spotifyApi, access_token, 0);
