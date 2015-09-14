@@ -37,6 +37,7 @@ function getSongs(api, token, page, playlist) {
                 // Todo - Hardcode 300 up top and pass it here. Its how many songs it will grab.
                 for (var i = 0; i < 300; i++) {
                     index = Math.floor(Math.random()*songs.length);
+                    console.log(song_string);
                     song_string += songs[index].track.id + ',';
                     songs.splice(index, 1);
                 }
@@ -90,12 +91,22 @@ $(function(){
 
     // Todo - Change all nmercer88's to your username
     // Todo - Make a call to spotify to get user name based off access_token spotifyApi.getMe(), save it.
+    function getUser(api, token, page){
 
+    spotifyApi.getMe()
+         .then(function(data) {
+            console.log('Some information about the authenticated user', data.body);
+            console.log(data.body);
+        }, function(err) {
+            console.log('Something went wrong!', err);
+        });
+}
     // Todo - Testing - Uncomment this to make it actually do the loopup on songs. For now we will fake it for testing.
     // getPlaylists(spotifyApi, access_token, 0);
 
     // Todo - Testing - Comment out to test full thing.
-    song_string = '52xuVonJruElPVfr2HtPNe,5I73HwV82DiWOJfzijlZs6,0sSoc9HhW9xkowdO8HxKPv'
+    // '52xuVonJruElPVfr2HtPNe,5I73HwV82DiWOJfzijlZs6,0sSoc9HhW9xkowdO8HxKPv'
+    song_string = ['52xuVonJruElPVfr2HtPNe,5I73HwV82DiWOJfzijlZs6']
     $('#spotify-player').html('<iframe src="https://embed.spotify.com/?uri=spotify:trackset:PREFEREDTITLE:'+ song_string +'"frameborder="0" allowtransparency="true"  width="500" height="500"></iframe>');
 
     // Todo - Create a loop to see if loaded == true or error. Check every millisecond.
