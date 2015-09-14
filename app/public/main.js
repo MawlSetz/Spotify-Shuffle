@@ -91,16 +91,18 @@ $(function(){
 
     // Todo - Change all nmercer88's to your username
     // Todo - Make a call to spotify to get user name based off access_token spotifyApi.getMe(), save it.
-    function getUser(api, token, page){
 
-    spotifyApi.getMe()
-         .then(function(data) {
-            console.log('Some information about the authenticated user', data.body);
-            console.log(data.body);
-        }, function(err) {
-            console.log('Something went wrong!', err);
-        });
-}
+    function getUser(api, token, page){
+        if(access_token){
+        spotifyApi.getMe()
+             .then(function(data) {
+                console.log('Some information about the authenticated user', data.body);
+                console.log(data.body);
+            }, function(err) {
+                console.log('Something went wrong!', err);
+            });
+         }
+        
     // Todo - Testing - Uncomment this to make it actually do the loopup on songs. For now we will fake it for testing.
     // getPlaylists(spotifyApi, access_token, 0);
 
@@ -125,5 +127,5 @@ $(function(){
     // Todo - Make it so you can save create and update playlists. Ask me about this. I can point you in the right direction.
     // Todo - Create an about page. Link to your github. Say you dont store any data locally. Put that cat picture on it <- Im srs engineers will eat that up ur hawt and cats
 
-
+    
 });
