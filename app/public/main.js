@@ -16,17 +16,18 @@
 var playlists = [];
 var songs = [];
 var song_string = "";
+var user = null;
 
 var loaded = false;
 var error = false;
+var songMax = 300;
 
 function getSongs(api, token, page, playlist) {
     if(!playlist) {
         playlist = playlists.shift();
     }
 
-    // Todo - Update nmercer88
-    api.getPlaylistTracks('setzerml', playlist.id, {offset: page, limit: 50}).then(function(data) {
+    api.getPlaylistTracks(user.id, playlist.id, {offset: page, limit: 50}).then(function(data) {
         songs.push.apply(songs, data.items);
 
         if (data.items.length >= 50) {
@@ -34,10 +35,17 @@ function getSongs(api, token, page, playlist) {
         } else {
             // This is where it finishes getting all the songs and kicks everythng off.
             if(playlists.length <= 0) {
-                // Todo - Hardcode 300 up top and pass it here. Its how many songs it will grab.
-                for (var i = 0; i < 300; i++) {
+                if(songs.length < songMax) {
+                    songMax = songs.length - 1;
+                    // songMax = 3;
+                } 
+                console.log('SongMax');
+                console.log(songMax);
+                for (var i = 0; i < songMax; i++) {
+                    console.log(songs.length -1 )
                     index = Math.floor(Math.random()*songs.length);
-                    console.log(song_string);
+                    console.log(index)
+
                     song_string += songs[index].track.id + ',';
                     songs.splice(index, 1);
                 }
@@ -60,7 +68,7 @@ function getSongs(api, token, page, playlist) {
 
 // Todo - Update nmercer88
 function getPlaylists(api, token, page) {
-    api.getUserPlaylists('setzerml', {offset: page, limit: 50}).then(function(data) {
+    api.getUserPlaylists(user.id, {offset: page, limit: 50}).then(function(data) {
         playlists.push.apply(playlists, data.items);
 
         // Todo Change the 50 to a hardcoded variable at the top. Change it everywhere you see 50.
@@ -84,37 +92,31 @@ $(function(){
     var access_token = $.QueryString["access_token"];
     var spotifyApi = new SpotifyWebApi();
     spotifyApi.setAccessToken(access_token);
+    function getUser(api) {
+        api.getMe(api).then(function(data) {
+            user = data;
+            console.log(user);
 
-    // Todo - USE NODEMON
-        // http://nodemon.io/
-        // nodemon app.js
+            getPlaylists(spotifyApi, access_token, 0);
 
-    // Todo - Change all nmercer88's to your username
-    // Todo - Make a call to spotify to get user name based off access_token spotifyApi.getMe(), save it.
+            }, function(err) {
+                console.error(err);
+                error = err;
+                return false;
+            });
+    }
+    getUser(spotifyApi);
+    return true;
+     
 
-    function getUser(api, access_token, page){
-        if(access_token){
-            spotifyApi.getMe()
-                 .then(function(data) {
-                    // var user_id =
-                    console.log(data);
-                    console.log('Some information about the authenticated user', data.body);
-                    console.log(data.body);
-                }, function(err) {
-                    console.log('Something went wrong!', err);
-                });
-             } else {
-                console.log('err');
-             }
-     }
         
     // Todo - Testing - Uncomment this to make it actually do the loopup on songs. For now we will fake it for testing.
     // getPlaylists(spotifyApi, access_token, 0);
 
     // Todo - Testing - Comment out to test full thing.
     // '52xuVonJruElPVfr2HtPNe,5I73HwV82DiWOJfzijlZs6,0sSoc9HhW9xkowdO8HxKPv'
-    song_string = ['52xuVonJruElPVfr2HtPNe,5I73HwV82DiWOJfzijlZs6']
-    $('#spotify-player').html('<iframe src="https://embed.spotify.com/?uri=spotify:trackset:PREFEREDTITLE:'+ song_string +'"frameborder="0" allowtransparency="true"  width="500" height="500"></iframe>');
+    // song_string = ['52xuVonJruElPVfr2HtPNe,5I73HwV82DiWOJfzijlZs6']
+    // $('#spotify-player').html('<iframe src="https://embed.spotify.com/?uri=spotify:trackset:PREFEREDTITLE:'+ song_string +'"frameborder="0" allowtransparency="true"  width="500" height="500"></iframe>');
 
     // Todo - Create a loop to see if loaded == true or error. Check every millisecond.
     // Todo - If loaded is true do whatever you need to do.

@@ -2,8 +2,8 @@ var express = require('express');
 var request = require('request');
 var querystring = require('querystring');
 
-var client_id = '42b90932c49944f48758b87b7b021f7e'; // Todo - Change Me
-var client_secret = '332388211e874073b6a42bdec032bb92'; // Todo - Change Me
+var client_id = client_id;
+var client_secret = client_secret;
 var redirect_uri = 'http://localhost:8888/callback/';
 
 var generateRandomString = function(length) {
@@ -56,11 +56,13 @@ app.get('/callback', function(req, res) {
   // var storedState = req.cookies ? req.cookies[stateKey] : null;
 
   if (state === null) { //state !== storedState
+    console.log('made it to line 59');
     res.redirect('/#' +
       querystring.stringify({
         error: 'state_mismatch'
       }));
   } else {
+    console.log('made it to line64');
     res.clearCookie(stateKey);
     var authOptions = {
       url: 'https://accounts.spotify.com/api/token',
