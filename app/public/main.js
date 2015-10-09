@@ -1,3 +1,12 @@
+function preloader(){
+    document.getElementById("loading").style.display = "none";
+    document.getElementById("content").style.display = "block";
+}//preloader
+window.onload = preloader;
+
+
+
+
 // Query string stuff. Ignore.
 (function($) {
     $.QueryString = (function(a) {
@@ -12,7 +21,7 @@
         })(window.location.search.substr(1).split('&'))
 })(jQuery);
 
-// Global Variables - Put main variables here.
+// Global Variables 
 var playlists = [];
 var songs = [];
 var song_string = "";
@@ -66,7 +75,6 @@ function getSongs(api, token, page, playlist) {
     });
 }
 
-// Todo - Update nmercer88
 function getPlaylists(api, token, page) {
     api.getUserPlaylists(user.id, {offset: page, limit: 50}).then(function(data) {
         playlists.push.apply(playlists, data.items);
@@ -92,6 +100,26 @@ $(function(){
     var access_token = $.QueryString["access_token"];
     var spotifyApi = new SpotifyWebApi();
     spotifyApi.setAccessToken(access_token);
+    function preloader(){
+    document.getElementById("loading").style.display = "none";
+    document.getElementById("content").style.display = "block";
+}//preloader
+window.onload = preloader;
+
+$("#search").on('click', function() {
+    $('#loading').toggle( $("#results").is(':empty') );
+
+    $.ajax({
+        url : 'search.php', 
+        data: this.value
+    }).done(function(data) {
+        $('#results').html(data);
+    }).always(function() {
+        $('#loading').hide();
+        if ( $("#results").is(':empty') ) $('#results').html('No results !');
+    });
+});
+
     function getUser(api) {
         api.getMe(api).then(function(data) {
             user = data;
@@ -107,8 +135,36 @@ $(function(){
     }
     getUser(spotifyApi);
     return true;
+    var banner = new Image();
+    var loading = new Image();
+    var bannerElement = document.getElementById("banner"); // assumes an element with id "banner" contains the banner image - you can get the element however you want.
+    banner.src = "https://media.giphy.com/media/jF1oqkXJL0Mda/giphy.gif";
+    loading.src = "http://giphy.com/gifs/sM503VtpDzxLy";
+    banner.onload = function() {
+        bannerElement.removeChild(bannerElement.lastChild);
+        bannerElement.appendChild(banner);
+    };
+    bannerElement.removeChild(bannerElement.lastChild);
+    bannerElement.appendChild(loading);
      
+    // function onReady(callback) {
+    //     var intervalID = window.setInterval(checkReady, 1000);
+    //     function checkReady() {
+    //         if (document.getElementsByTagName('body')[0] !== undefined) {
+    //             window.clearInterval(intervalID);
+    //             callback.call(this);
+    //         }
+    //     }
+    // }
 
+    // function show(id, value) {
+    //     document.getElementById(id).style.display = value ? 'block' : 'none';
+    // }
+
+    // onReady(function () {
+    //     show('page', true);
+    //     show('loading', false);        
+    // });
         
     // Todo - Testing - Uncomment this to make it actually do the loopup on songs. For now we will fake it for testing.
     // getPlaylists(spotifyApi, access_token, 0);
@@ -136,3 +192,4 @@ $(function(){
 
     
 });
+

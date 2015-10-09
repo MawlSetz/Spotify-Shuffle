@@ -2,8 +2,8 @@ var express = require('express');
 var request = require('request');
 var querystring = require('querystring');
 
-var client_id = client_id;
-var client_secret = client_secret;
+var client_id = '42b90932c49944f48758b87b7b021f7e';
+var client_secret = '332388211e874073b6a42bdec032bb92';
 var redirect_uri = 'http://localhost:8888/callback/';
 
 var generateRandomString = function(length) {
@@ -44,7 +44,7 @@ app.get('/login', function(req, res) {
 //------------------------------------------------
 app.get('/', function(req, res) {
     var access_token = req.query.access_token;
-    res.render('index', { title: 'Wut Up'});
+    res.render('index', { title: 'Shuffle Yr Playlists'});
 });
 
 app.get('/callback', function(req, res) {
