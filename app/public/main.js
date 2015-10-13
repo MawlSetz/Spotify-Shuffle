@@ -31,6 +31,10 @@ var loaded = false;
 var error = false;
 var songMax = 300;
 
+function loadingFinished() {
+    $('#spotify-player').html('<iframe src="https://embed.spotify.com/?uri=spotify:trackset:PREFEREDTITLE:'+ song_string +'"frameborder="0" allowtransparency="true"  width="500" height="500"></iframe>');
+}
+
 function getSongs(api, token, page, playlist) {
     if(!playlist) {
         playlist = playlists.shift();
@@ -61,11 +65,8 @@ function getSongs(api, token, page, playlist) {
 
                 song_string = song_string.slice(0, -1);
                 loaded = true;
-
-function loadingFinished() {
-    $('#spotify-player').html('<iframe src="https://embed.spotify.com/?uri=spotify:trackset:PREFEREDTITLE:'+ song_string +'"frameborder="0" allowtransparency="true"  width="500" height="500"></iframe>');
-    } 
-} else {
+                loadingFinished();
+        } else {
                 getSongs(api, token, 0, false);
             }
         }
