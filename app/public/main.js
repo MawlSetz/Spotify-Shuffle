@@ -128,7 +128,7 @@ $("#search").on('click', function() {
             getPlaylists(spotifyApi, access_token, 0);
 
             }, function(err) {
-                console.error(err);
+                console.error('user is not logged in');
                 error = err;
                 return false;
             });

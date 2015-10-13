@@ -1,12 +1,21 @@
 body {
-	background-color: #44ddff;
-    font-family:"Brush Script MT", cursive;
+	background-color: #141414;
+    font-family: Proxima Nova;
     left: 200px;
 }
 h1 {
-    font-size: 2em;
-    margin-bottom: 0.2em;
+    font-size: 1em;
     padding-bottom: 0;
+    color: #68cf87;
+    font-family: Proxima Nova;
+    padding: 0px 10px 10px 80px;
+}
+h2 {
+    font-size: 2em;
+    color: #68cf87;
+    font-family: Proxima Nova;
+    padding: 35px 10px 0px 80px;
+    
 }
 p {
     font-size: 1.5em;

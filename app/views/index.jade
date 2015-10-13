@@ -5,14 +5,18 @@ html
     script(src='https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js')
     script(src='/spotify-web-api.js')
     script(src='/main.js')
+    script(src='https://use.typekit.net/grz5lft.js')
+    script.
+      try{Typekit.load({ async: true });}catch(e){}
 
 
-  body
-  button(class='btn btn-primary', href='/login') Log in with spotify
-  h1= title
-<div id='loading'>YOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO</div>
-<div id='content'>
-<div id="spotify-player"></div>
-</div>
-
+body
+h2= 'SpotifyShuffle'
+h1= title
+a.btn.btn-primary(href='/login') Log in with Spotify
+.banner
+h2
+#loading YOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO
+#content
+#spotify-player
 
