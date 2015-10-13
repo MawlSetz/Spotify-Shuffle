@@ -91,12 +91,12 @@ function getPlaylists(api, token, page) {
     });
 }
 
-function getUser(api) {
+function getUser(api, access_token) {
      api.getMe(api).then(function(data) {
             user = data;
             console.log(user);
 
-            getPlaylists(spotifyApi, access_token, 0);
+            getPlaylists(api, access_token, 0);
 
             }, function(err) {
                 console.error('user is not logged in');
@@ -111,8 +111,7 @@ $(function(){
     var spotifyApi = new SpotifyWebApi();
     spotifyApi.setAccessToken(access_token);
 
-    getUser();
-    getUser(spotifyApi);
+    getUser(spotifyApi, access_token, 0);
     
         
     // Todo - Testing - Uncomment this to make it actually do the loopup on songs. For now we will fake it for testing.
