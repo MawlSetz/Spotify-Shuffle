@@ -134,37 +134,7 @@ $("#search").on('click', function() {
             });
     }
     getUser(spotifyApi);
-    return true;
-    var banner = new Image();
-    var loading = new Image();
-    var bannerElement = document.getElementById("banner"); // assumes an element with id "banner" contains the banner image - you can get the element however you want.
-    banner.src = "https://media.giphy.com/media/jF1oqkXJL0Mda/giphy.gif";
-    loading.src = "http://giphy.com/gifs/sM503VtpDzxLy";
-    banner.onload = function() {
-        bannerElement.removeChild(bannerElement.lastChild);
-        bannerElement.appendChild(banner);
-    };
-    bannerElement.removeChild(bannerElement.lastChild);
-    bannerElement.appendChild(loading);
-     
-    // function onReady(callback) {
-    //     var intervalID = window.setInterval(checkReady, 1000);
-    //     function checkReady() {
-    //         if (document.getElementsByTagName('body')[0] !== undefined) {
-    //             window.clearInterval(intervalID);
-    //             callback.call(this);
-    //         }
-    //     }
-    // }
-
-    // function show(id, value) {
-    //     document.getElementById(id).style.display = value ? 'block' : 'none';
-    // }
-
-    // onReady(function () {
-    //     show('page', true);
-    //     show('loading', false);        
-    // });
+    
         
     // Todo - Testing - Uncomment this to make it actually do the loopup on songs. For now we will fake it for testing.
     // getPlaylists(spotifyApi, access_token, 0);
