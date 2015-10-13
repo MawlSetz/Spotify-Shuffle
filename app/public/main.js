@@ -1,10 +1,3 @@
-function preloader(){
-    document.getElementById("loading").style.display = "none";
-    document.getElementById("content").style.display = "block";
-}//preloader
-window.onload = preloader;
-
-
 
 
 // Query string stuff. Ignore.
@@ -98,30 +91,8 @@ function getPlaylists(api, token, page) {
     });
 }
 
-
-// Main Page JS Function
-$(function(){
-    var access_token = $.QueryString["access_token"];
-    var spotifyApi = new SpotifyWebApi();
-    spotifyApi.setAccessToken(access_token);
-
-
-$("#search").on('click', function() {
-    $('#loading').toggle( $("#results").is(':empty') );
-
-    $.ajax({
-        url : 'search.php', 
-        data: this.value
-    }).done(function(data) {
-        $('#results').html(data);
-    }).always(function() {
-        $('#loading').hide();
-        if ( $("#results").is(':empty') ) $('#results').html('No results !');
-    });
-});
-
-    function getUser(api) {
-        api.getMe(api).then(function(data) {
+function getUser(api) {
+     api.getMe(api).then(function(data) {
             user = data;
             console.log(user);
 
@@ -132,7 +103,15 @@ $("#search").on('click', function() {
                 error = err;
                 return false;
             });
-    }
+}
+
+// Main Page JS Function
+$(function(){
+    var access_token = $.QueryString["access_token"];
+    var spotifyApi = new SpotifyWebApi();
+    spotifyApi.setAccessToken(access_token);
+
+    getUser();
     getUser(spotifyApi);
     
         
