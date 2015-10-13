@@ -33,6 +33,7 @@ var songMax = 300;
 
 function loadingFinished() {
     $('#spotify-player').html('<iframe src="https://embed.spotify.com/?uri=spotify:trackset:PREFEREDTITLE:'+ song_string +'"frameborder="0" allowtransparency="true"  width="500" height="500"></iframe>');
+    $( ".loading" ).hide();
 }
 
 function getSongs(api, token, page, playlist) {
@@ -103,11 +104,7 @@ $(function(){
     var access_token = $.QueryString["access_token"];
     var spotifyApi = new SpotifyWebApi();
     spotifyApi.setAccessToken(access_token);
-    function preloader(){
-    document.getElementById("loading").style.display = "none";
-    document.getElementById("content").style.display = "block";
-}//preloader
-window.onload = preloader;
+
 
 $("#search").on('click', function() {
     $('#loading').toggle( $("#results").is(':empty') );
