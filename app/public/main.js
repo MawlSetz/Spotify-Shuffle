@@ -61,7 +61,9 @@ function getSongs(api, token, page, playlist) {
 
                 song_string = song_string.slice(0, -1);
                 loaded = true;
-                $('#spotify-player').html('<iframe src="https://embed.spotify.com/?uri=spotify:trackset:PREFEREDTITLE:'+ song_string +'"frameborder="0" allowtransparency="true"  width="500" height="500"></iframe>');
+                function loadingFinished() {
+                    $('#spotify-player').html('<iframe src="https://embed.spotify.com/?uri=spotify:trackset:PREFEREDTITLE:'+ song_string +'"frameborder="0" allowtransparency="true"  width="500" height="500"></iframe>');
+                }
 
             } else {
                 getSongs(api, token, 0, false);
