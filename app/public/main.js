@@ -108,11 +108,14 @@ function getUser(api, access_token) {
 // Main Page JS Function
 $(function(){
     var access_token = $.QueryString["access_token"];
-    var spotifyApi = new SpotifyWebApi();
-    spotifyApi.setAccessToken(access_token);
-
-    getUser(spotifyApi, access_token, 0);
-    
+    if (access_token != null){
+        $("loading").removeClass("hidden");
+        var spotifyApi = new SpotifyWebApi();
+        spotifyApi.setAccessToken(access_token);
+        getUser(spotifyApi, access_token, 0);
+    } else {
+        console.log('no access token');
+    }
         
     // Todo - Testing - Uncomment this to make it actually do the loopup on songs. For now we will fake it for testing.
     // getPlaylists(spotifyApi, access_token, 0);

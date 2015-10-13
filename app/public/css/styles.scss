@@ -6,15 +6,17 @@ body {
 h1 {
     font-size: 1em;
     padding-bottom: 0;
-    color: #68cf87;
+    color: #1ed760;
     font-family: Proxima Nova;
-    padding: 0px 10px 10px 80px;
+    padding: 0px 10px 10px 270px;
 }
 h2 {
-    font-size: 2em;
-    color: #68cf87;
+    font-size: 3em;
+    color: #1ed760;
     font-family: Proxima Nova;
-    padding: 35px 10px 0px 80px;
+    padding: 35px 10px 0px 180px;
+    letter-spacing: 1px;
+
     
 }
 p {
@@ -22,17 +24,9 @@ p {
     margin-top: 0;
     padding-top: 0;
 }
-#content {
-    display: none;
-    left: 450px;
-}
-#loading {
-    display: block;
-    position: absolute;
-    top: 0;
-    left: 340px;
-    z-index: 1000;
-    width: 100px;
-    height: 100px;
+
+.hidden {
+
+
     
     }
