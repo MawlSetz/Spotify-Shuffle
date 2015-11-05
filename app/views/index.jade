@@ -1,23 +1,44 @@
 html
   head
     title= title
-    link(href='/css/styles.scss', rel='stylesheet')
+    meta(charset='utf-8')
+    meta(http-equiv='X-UA-Compatible', content='IE=edge')
+    meta(name='viewport', content='width=device-width, initial-scale=1')
     script(src='https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js')
     script(src='/spotify-web-api.js')
     script(src='/main.js')
     script(src='https://use.typekit.net/grz5lft.js')
     script.
       try{Typekit.load({ async: true });}catch(e){}
+    link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css')
+    link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css')
+    script(src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js')
+    link(type='text/css', rel='stylesheet', href='css/styles.css')
 
 
 body
-h2= 'Spotify Shuffle'
-h1= title
-a.btn.btn-primary(href='/login') Log in with Spotify
-br
-img.loading.hidden(src='/images/spiffygif_176x176.gif', alt='loading your playlist now')
-.banner
-h2
-#content
-#spotify-player
+nav.navbar.navbar-default
+      .container-fluid
+        .navbar-header
+          a.navbar-brand(href='/')
+            h1 Spotify Shuffle
+            h3= title
+          a.logo(href='/')
+            img(src='/images/shuffle-logo.png', class='logo')
+        div
+          ul.nav.navbar-nav
+            li
+              a(href='/') Home
+            li
+              a(href='/login') Login
+            li
+              a(href='https://github.com/MawlSetz/Spotify-Shuffle') View Source on Github
 
+.content
+  a.btn.btn-primary(href='/login') Log in with Spotify
+  br
+  img.loading.hidden(src='/images/spiffygif_176x176.gif', alt='loading your playlist now')
+  .banner
+  h2
+  #spotify-player
+ 
