@@ -1,11 +1,29 @@
 {
-  "name": "app",
+  "name": "SpotifyShuffle",
   "version": "1.0.0",
-  "description": "",
+  "description": "An app that shuffles your spoitfy playlists in the browser",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
-  "license": "ISC"
+  "author": "Molly Setzer",
+  "dependencies": {
+    "express": "^4.13.3",
+    "jade": "",
+    "querystring": "",
+    "request": "",
+    "spotify-web-api-node": "",
+  },
+  "engines": {
+    "node": "4.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/heroku/node-js-sample"
+  },
+  "keywords": [
+    "node",
+    "express"
+  ],
+  "license": "MIT"
 }

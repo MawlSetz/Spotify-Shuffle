@@ -1,0 +1,39 @@
+
+.container-fluid {
+    background-color: #141414;
+    color: #1ed760;
+
+    .navbar-header {
+        a.navbar-brand {
+            h1 {
+        	background-color: #141414;
+            font-family: 'Proxima Nova';
+            font-style: bold;
+            font-size: 760px;
+            color: #1ed760;
+            left: 200px;
+            color: #1ed760;
+            }
+        }
+    }
+}
+h1 {
+    padding-bottom: 0;
+    color: #1ed760;
+    font-family: Proxima Nova;
+    padding: 0px 10px 10px 270px;
+}
+h2 {
+    font-size: 3em;
+    color: #1ed760;
+    font-family: Proxima Nova;
+    padding: 35px 10px 0px 180px;
+    letter-spacing: 1px;
+
+    
+}
+p {
+    font-size: 1.5em;
+    margin-top: 0;
+    padding-top: 0;
+}

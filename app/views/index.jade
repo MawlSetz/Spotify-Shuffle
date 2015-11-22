@@ -13,7 +13,7 @@ html
     link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css')
     link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css')
     script(src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js')
-    link(type='text/css', rel='stylesheet', href='css/styles.css')
+    link(href='/css/styles.css', rel='stylesheet')
 
 
 body
@@ -22,7 +22,6 @@ nav.navbar.navbar-default
         .navbar-header
           a.navbar-brand(href='/')
             h1 Spotify Shuffle
-            h3= title
           a.logo(href='/')
             img(src='/images/shuffle-logo.png', class='logo')
         div
@@ -33,7 +32,6 @@ nav.navbar.navbar-default
               a(href='/login') Login
             li
               a(href='https://github.com/MawlSetz/Spotify-Shuffle') View Source on Github
-
 .content
   a.btn.btn-primary(href='/login') Log in with Spotify
   br
@@ -41,4 +39,4 @@ nav.navbar.navbar-default
   .banner
   h2
   #spotify-player
- 
+  img.hidden(src='/images/loadingLoop.gif', class='loadingGif')
