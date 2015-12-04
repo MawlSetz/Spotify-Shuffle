@@ -32,13 +32,14 @@ var uris = [];
 //  Logic Controllers
 //************************
 
-function replaceOldPlaylist(api, token) {
+function replaceOldPlaylist(api, token, playlist) {
     //replace "SpotifyShuffle Playlist" with new randomization of songs
     //break out randomization to this function
     //PUT https://api.spotify.com/v1/users/{user_id}/playlists/{playlist_id}/tracks
     newTracks = [];
         //randomize new songs
         // push to newTracks array
+  
         if(songs.length < songMax) {
             songMax = songs.length - 1;
         }
@@ -56,7 +57,7 @@ function replaceOldPlaylist(api, token) {
         loaded = true;
         loadingFinished();
     //randomize new songs and push them into newTracks[];
-    api.replaceTracksInPlaylist(user.id, playlist.id, uris, callback);
+    // api.replaceTracksInPlaylist(user.id, shufflePlaylist.id, newTracks);
 
 
 }
@@ -85,6 +86,7 @@ function getPlaylistId(playlist) {
     if(!doesPlaylistExist()) {
         console.log(playlist.name);
         if(playlist.name === playlistName){
+            shufflePlaylist.id 
             shufflePlaylist = playlist;
             return true;
         }
@@ -108,6 +110,7 @@ function deletePlaylist(api, token) {
     // https://developer.spotify.com/web-api/remove-tracks-playlist/
     console.log('--- deletePlaylist');
     console.log(shufflePlaylist);
+    console.log(shufflePlaylist.id);
     var totalTracks = shufflePlaylist.tracks.total;
     if(totalTracks>0){
         var posArray = [];
@@ -224,12 +227,9 @@ function login() {
 
 function loading(access_token) {
         $( document ).ready(function() {
-        $( "a" ).click(function( event ) {
-            $(".loadingGif").removeAttr("id");
-            event.preventDefault();
-        });
+        $('#loading-gif').html('<img src="/images/loadingLoop.gif", class="loadingGif">');
     });
-    $("loading").removeAttr('hidden');
+
 
     var spotifyApi = new SpotifyWebApi();
     spotifyApi.setAccessToken(access_token);
@@ -237,8 +237,9 @@ function loading(access_token) {
 }
 
 function loadingFinished() {
-    $('#spotify-player').html('<iframe src="https://embed.spotify.com/?uri=spotify:trackset:PREFEREDTITLE:'+ song_string +'"frameborder="0" allowtransparency="true"  width="500" height="500"></iframe>');
-    $( ".loading" ).hide();
+    $('#spotify-player').html('<iframe src="https://embed.spotify.com/?uri=spotify:trackset:PREFEREDTITLE:'+ song_string +'&theme=white" frameborder="0" allowtransparency="true"  width="640" height="720"></iframe>');
+    $('#loading-gif').hide();
+    $('#welcome').html('<h3>Welcome <%= username %>');
 }
 
 
