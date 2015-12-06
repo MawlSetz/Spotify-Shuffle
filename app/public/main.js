@@ -27,43 +27,74 @@ var playlistName = "SpotifyShuffle.com"
 var shufflePlaylist = false;
 var currentPlaylistUris = [];
 var uris = [];
+var newTracks = [];
+var finUri = [];
+var shufflePlaylistId = "";
 
 //************************
 //  Logic Controllers
 //************************
+// function concadinateUris() {
+//     //for each item in newTracks array, add '{"uris": ["spotify:track:' + newTracks[0] + '", '
+//     //""
+//     //on last line add '"]}'
+//     for(i = 0; i < newTracks.length; i++){
 
-function replaceOldPlaylist(api, token, playlist) {
-    //replace "SpotifyShuffle Playlist" with new randomization of songs
-    //break out randomization to this function
-    //PUT https://api.spotify.com/v1/users/{user_id}/playlists/{playlist_id}/tracks
-    newTracks = [];
-        //randomize new songs
-        // push to newTracks array
-  
-        if(songs.length < songMax) {
-            songMax = songs.length - 1;
-        }
 
-        for (var i = 0; i < songMax; i++) {
-            // console.log(songs.length -1);
+
+//     }
+//     //push each item into finUri
+//     //call populateNewPlaylist(api, token, playlist)
+
+// }
+
+function chopToLimit(api, token) {
+    // send first 100 songs, then remove them from newTracks
+    // if(newTracks.length < 100) {
+    //     finUri = newTracks.shift();
+    // } else {
+    //     //else cut into 100 song chunks
+    //     for(i=0; i<100; i++) {
+    //         finUri = newTracks.shift();
+    //     }
+    // }
+    tracks = ['spotify:track:0aULRU35N9kTj6O1xMULRR', 'spotify:track:78Iovnp3wffDDgbyNRVhuR', 'spotify:track:3SHxCaqhVMgQ5MDGrObjqo'];
+    populateNewPlaylist(api, token, tracks);
+}
+
+function populateNewPlaylist(api, token) {
+    // songs = songs[index].track.id
+    var tracks = []
+
+    for (var i = 0; i < 20; i++) {
+        if(songs.length > 0) {
             index = Math.floor(Math.random()*songs.length);
-            // console.log(index);
-
-            song_string += songs[index].track.id + ',';
+            // Todo - Why are we getting null ids
+            if(songs[index].track.id) {
+                tracks.push('spotify:track:' + songs[index].track.id);
+            }
             songs.splice(index, 1);
+        } else {
+            // This happens when everything is over
+            console.log(tracks);
+            api.addTracksToPlaylist(user.id, shufflePlaylist.id, tracks);
+            return true;
         }
+    }
+    
+    api.addTracksToPlaylist(user.id, shufflePlaylist.id, tracks).then(function(data) {
+        populateNewPlaylist(api, token);
+    });
+}
 
-        song_string = song_string.slice(0, -1);
+function replaceOldPlaylist(api, token) {  
+        populateNewPlaylist(api, token);
         loaded = true;
         loadingFinished();
-    //randomize new songs and push them into newTracks[];
-    // api.replaceTracksInPlaylist(user.id, shufflePlaylist.id, newTracks);
-
-
 }
 
 function createNewPlaylist(api, token) {
-    // POST https://api.spotify.com/v1/users/{user_id}/playlists
+    // create new playlist
     api.createPlaylist(user.id, {"name":"SpotifyShuffle.com"}).then(function(data) {
         console.log('Ok. Playlist created!');
     });
@@ -86,7 +117,6 @@ function getPlaylistId(playlist) {
     if(!doesPlaylistExist()) {
         console.log(playlist.name);
         if(playlist.name === playlistName){
-            shufflePlaylist.id 
             shufflePlaylist = playlist;
             return true;
         }
@@ -237,9 +267,9 @@ function loading(access_token) {
 }
 
 function loadingFinished() {
-    $('#spotify-player').html('<iframe src="https://embed.spotify.com/?uri=spotify:trackset:PREFEREDTITLE:'+ song_string +'&theme=white" frameborder="0" allowtransparency="true"  width="640" height="720"></iframe>');
+    $('#spotify-player').html('<iframe src="https://embed.spotify.com/?uri=spotify:user:' + user.id + ':playlist:'+ shufflePlaylist.id +'&theme=white" frameborder="0" allowtransparency="true"  width="640" height="720"></iframe>');
     $('#loading-gif').hide();
-    $('#welcome').html('<h3>Welcome <%= username %>');
+    $('#welcome').html('<h3>Welcomes!</h3>');
 }
 
 
