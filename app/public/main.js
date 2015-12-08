@@ -64,8 +64,7 @@ function chopToLimit(api, token) {
 
 function populateNewPlaylist(api, token) {
     // songs = songs[index].track.id
-    var tracks = []
-
+    var tracks = [];
     for (var i = 0; i < 20; i++) {
         if(songs.length > 0) {
             index = Math.floor(Math.random()*songs.length);

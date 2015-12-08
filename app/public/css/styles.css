@@ -10,25 +10,13 @@ div.container {
   margin: 0;
   border: none;
 }
-a.navbar-brand h1 {
-  background-color: #282828;
-  font-family: 'Proxima Nova';
-  font-style: bold;
-  font-size: 30px;
-  color: #1ed760;
-  padding: 0px 15px 15px 190px;
-  border: none;
-
-}
-
 a.navbar-brand h3 {
   padding: 0px 15px 15px 190px;
   font-family: 'Proxima Nova', 'Bold';
 
 }
-
-a.logo img.logo {
-  padding: -20px 15px 15px 15px;
+img.logo {
+  padding: 20px 15px 15px 15px;
   z-index: 2;
   height: 120px;
   width: 120px;
@@ -50,10 +38,9 @@ div.content {
   padding: 2%;
 }
 h1 {
-  padding-bottom: 0;
   color: #1ed760;
   font-family: Proxima Nova;
-  padding: 0px 10px 10px 170px;
+  padding: 20px 10px 10px 170px;
 }
 
 h2 {
