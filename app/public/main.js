@@ -100,11 +100,6 @@ function createNewPlaylist(api, token) {
 
 }
 
-function playlistsExists() {
-    if (!doesPlaylistExist())
-        createNewPlaylist();
-}
-
 function doesPlaylistExist() {
     if (shufflePlaylist) {
         return true;
@@ -175,12 +170,11 @@ function getSongs(api, token, page, playlist) {
             // Todo - Break this out into another LOGIC CONTROLLER
             // Todo - From here call the new randomzie song list
             if(playlists.length <= 0) {
-                if(doesPlaylistExist()){
-                    // console.log("We Got It: " + playlistId);
-
+                if(doesPlaylistExist()) {
                     deletePlaylist(api, token);
-
                 } else {
+                    createNewPlaylist(api, token);
+                    populateNewPlaylist(api, token);
                     console.log("We DIDNT GET IT");
                 }
 
