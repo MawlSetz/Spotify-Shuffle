@@ -7,20 +7,20 @@ html
     script(src='https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js')
     script(src='/spotify-web-api.js')
     script(src='/main.js')
-    script(src='https://use.typekit.net/grz5lft.js')
-    script.
-      try{Typekit.load({ async: true });}catch(e){}
+    link(href='https://fonts.googleapis.com/css?family=Montserrat:400,700', rel='stylesheet', type='text/css')
     link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css')
     link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css')
     script(src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js')
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/gsap/1.18.0/TweenMax.min.js')
     link(href='/css/styles.css', rel='stylesheet')
 
 
 body
   div.top
-    a.logo(href='/')
-    img(src='/images/shuffle-logo.png', class='logo')
-    h1 Spotify Shuffle
+    .sidebar
+      a.logo(href='/')
+      img(src='/images/shuffle-logo.png', class='logo')
+      h1 Spotify Shuffle
 .content
   a.btn.btn-default(href='/login') Log in with Spotify
   br
@@ -30,6 +30,10 @@ body
   .banner
   h2
   #spotify-player
+  .card
+    img#card1(src='/images/noteCard.png')
+    img#card2(src='/images/noteCard2.png')
+    img#card3(src='/images/noteCard3.png')
+  p.text Shuffle your spotify playlists with this tool. It's easy to be overzealous when adding songs to your collection -- and don't want to piece through all your files. Enjoy rediscovering all the weird tunes in your archive. 
 div.footer
   a(href='https://github.com/MawlSetz/Spotify-Shuffle') View Source on Github
-  p.text Shuffle your spotify playlists with this tool. It's easy to be overzealous when adding songs to your collection -- now your stuck with a massive compilation and don't want to piece through all your files. Enjoy rediscovering all the weird tunes you liked in college.

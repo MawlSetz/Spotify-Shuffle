@@ -10,8 +10,14 @@ img.logo {
   height: 120px;
   width: 120px;
 }
-.navbar-brand {
+.sidebar {
   padding: 0px;
+  top: 0;
+  background-color: white;
+  bottom: 0;
+  width: 10%;
+  height: 100%;
+
 }
 
 ul.nav.navbar-nav {
@@ -28,7 +34,8 @@ div.content {
 }
 h1 {
   color: #2fd566;
-  font-family: Proxima Nova;
+  font-family: 'Montserrat', sans-serif;
+  letter-spacing: 4px;
   padding: 20px 10px 10px 170px;
   top: 0px;
   position: absolute;
@@ -58,6 +65,25 @@ p {
 #spotify-player {
     padding-left: 42%;
     padding-top: -5%;
+}
+.card {
+  padding-left: 40%;
+  padding-bottom: 30%;
+}
+img#card1 {
+  height: 400px;
+  width: 250px;
+}
+img#card2 {
+  height: 400px;
+  width:  250px;
+}
+img#card3 {
+  height: 400px;
+  width:  250px;
+}
+p.text {
+  padding-bottom: 40px;
 }
 div.footer a {
   position: fixed;

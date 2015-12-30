@@ -253,10 +253,22 @@ function loading(access_token) {
         $('#loading-gif').html('<img src="/images/loadingLoop.gif", class="loadingGif">');
     });
 
+    //animation ----------------------------------
+    var card1 = document.getElementById("card1");
+      var card1Tween = new TweenMax.to(card1, 2, {scale:0.5, repeat:-1, yoyo:true, bezier:{values:[{x:100, y:250}, {x:200, y:375}, {x:300, y:500}]}, ease:Power1.easeOut});
+
+      var card2 = document.getElementById("card2");
+      var card2Tween = new TweenMax.to(card2, 2, {scale:0.5, repeat:-1, yoyo:true, bezier:{values:[{x:-100, y:250}, {x:-200, y:375}, {x:-300, y:500}]}, ease:Power1.easeOut});
+
+      var card3 = document.getElementById("card3");
+      var card3Tween = new TweenMax.to(card3, 2, {scale:0.5, repeat:-1, yoyo:true, bezier:{values:[{x:-400, y:250}, {x:-700, y:375}, {x:-900, y:500}]}, ease:Power1.easeOut});
+      //-------------------------------------------
 
     var spotifyApi = new SpotifyWebApi();
     spotifyApi.setAccessToken(access_token);
     getUser(spotifyApi, access_token, 0);
+
+
 }
 
 function loadingFinished() {
