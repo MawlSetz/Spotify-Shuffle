@@ -178,23 +178,7 @@ function getSongs(api, token, page, playlist) {
                     console.log("We DIDNT GET IT");
                 }
 
-                // if(songs.length < songMax) {
-                //     songMax = songs.length - 1;
-                // }
-
-                // for (var i = 0; i < songMax; i++) {
-                //     // console.log(songs.length -1);
-                //     index = Math.floor(Math.random()*songs.length);
-                //     // console.log(index);
-
-                //     song_string += songs[index].track.id + ',';
-                //     songs.splice(index, 1);
-                // }
-
-                // song_string = song_string.slice(0, -1);
-                // loaded = true;
-                // loadingFinished();
-        } else {
+            } else {
                 getSongs(api, token, 0, false);
             }
         }
@@ -249,20 +233,22 @@ function login() {
 }
 
 function loading(access_token) {
-        $( document ).ready(function() {
-        $('#loading-gif').html('<img src="/images/loadingLoop.gif", class="loadingGif">');
+    $( document ).ready(function() {
+        $('#cards').removeClass('hidden');
+        $('.button').addClass('hidden');
+
     });
 
-    //animation ----------------------------------
+    //green sock animation ----------------------------------
     var card1 = document.getElementById("card1");
-      var card1Tween = new TweenMax.to(card1, 2, {scale:0.5, repeat:-1, yoyo:true, bezier:{values:[{x:100, y:250}, {x:200, y:375}, {x:300, y:500}]}, ease:Power1.easeOut});
+    var card1Tween = new TweenMax.to(card1, 2, {scale:0.5, repeat:-1, yoyo:true, bezier:{values:[{x:100, y:250}, {x:200, y:375}, {x:300, y:500}]}, ease:Power1.easeOut});
 
-      var card2 = document.getElementById("card2");
-      var card2Tween = new TweenMax.to(card2, 2, {scale:0.5, repeat:-1, yoyo:true, bezier:{values:[{x:-100, y:250}, {x:-200, y:375}, {x:-300, y:500}]}, ease:Power1.easeOut});
+    var card2 = document.getElementById("card2");
+    var card2Tween = new TweenMax.to(card2, 2, {scale:0.5, repeat:-1, yoyo:true, bezier:{values:[{x:-100, y:250}, {x:-200, y:375}, {x:-300, y:500}]}, ease:Power1.easeOut});
 
-      var card3 = document.getElementById("card3");
-      var card3Tween = new TweenMax.to(card3, 2, {scale:0.5, repeat:-1, yoyo:true, bezier:{values:[{x:-400, y:250}, {x:-700, y:375}, {x:-900, y:500}]}, ease:Power1.easeOut});
-      //-------------------------------------------
+    var card3 = document.getElementById("card3");
+    var card3Tween = new TweenMax.to(card3, 2, {scale:0.5, repeat:-1, yoyo:true, bezier:{values:[{x:-400, y:250}, {x:-700, y:375}, {x:-900, y:500}]}, ease:Power1.easeOut});
+    //-------------------------------------------
 
     var spotifyApi = new SpotifyWebApi();
     spotifyApi.setAccessToken(access_token);
@@ -274,7 +260,8 @@ function loading(access_token) {
 function loadingFinished() {
     $('#spotify-player').html('<iframe src="https://embed.spotify.com/?uri=spotify:user:' + user.id + ':playlist:'+ shufflePlaylist.id +'&theme=white" frameborder="0" allowtransparency="true"  width="640" height="720"></iframe>');
     $('#loading-gif').hide();
-    $('#welcome').html('<h3>Welcomes!</h3>');
+    $('#welcome').html('<h3>Welcomes!' + user.name + "</h3>');
+    $('#cards').hide();
 }
 
 

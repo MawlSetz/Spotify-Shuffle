@@ -20,9 +20,10 @@ body
     .sidebar
       a.logo(href='/')
       img(src='/images/shuffle-logo.png', class='logo')
-      h1 Spotify Shuffle
+      h1 Spotify  Shuffle
 .content
-  a.btn.btn-default(href='/login') Log in with Spotify
+  div.button
+    a.btn.btn-default(href='/login') Log in with Spotify
   br
   h3
   #welcome
@@ -30,10 +31,10 @@ body
   .banner
   h2
   #spotify-player
-  .card
-    img#card1(src='/images/noteCard.png')
-    img#card2(src='/images/noteCard2.png')
-    img#card3(src='/images/noteCard3.png')
+  div#cards.hidden
+      img#card1(src='/images/noteCard.png')
+      img#card2(src='/images/noteCard2.png')
+      img#card3(src='/images/noteCard3.png')
   p.text Shuffle your spotify playlists with this tool. It's easy to be overzealous when adding songs to your collection -- and don't want to piece through all your files. Enjoy rediscovering all the weird tunes in your archive. 
 div.footer
   a(href='https://github.com/MawlSetz/Spotify-Shuffle') View Source on Github

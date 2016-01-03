@@ -4,12 +4,6 @@ body {
 div.top {
   position: relative;
 }
-img.logo {
-  padding: 20px 15px 15px 15px;
-  z-index: 2;
-  height: 120px;
-  width: 120px;
-}
 .sidebar {
   padding: 0px;
   top: 0;
@@ -17,7 +11,15 @@ img.logo {
   bottom: 0;
   width: 10%;
   height: 100%;
+  position: fixed;
+/*  overflow: auto;*/
+}
 
+img.logo {
+  padding: 20px 15px 15px 15px;
+  z-index: 2;
+  height: 120px;
+  width: auto;
 }
 
 ul.nav.navbar-nav {
@@ -25,20 +27,29 @@ ul.nav.navbar-nav {
     border: none;
 }
 
-a.navbar-brand a.logo {
-  padding: -20px 0px 15px 15px;
-  z-index: 1;
+a.btn.btn-default {
+
+  margin: 40px 30px 40px 400px;
 }
 div.content {
   padding: 2%;
 }
 h1 {
+  -webkit-transform: rotate(270deg);   
+  -moz-transform: rotate(270deg);
+  -ms-transform: rotate(270deg);
+  -o-transform: rotate(270deg);
+  transform: rotate(270deg);
   color: #2fd566;
   font-family: 'Montserrat', sans-serif;
-  letter-spacing: 4px;
-  padding: 20px 10px 10px 170px;
-  top: 0px;
-  position: absolute;
+  letter-spacing: 7px;
+  padding: 30px -410px 10px -310px;
+  position: relative;
+  display: inline-block;
+  white-space: nowrap;
+  bottom: 0;
+  margin-top: 180%;
+  margin-left: -120;
 }
 
 h2 {
@@ -49,12 +60,6 @@ h2 {
   letter-spacing: 1px;
 }
 
-p {
-  color: white;
-  font-size: 1.25em;
-  margin-top: 0;
-  width: 35%;
-}
 .content {
     padding: 40px;
 }
@@ -63,27 +68,38 @@ p {
   width: 30px;
 }
 #spotify-player {
-    padding-left: 42%;
+    padding-left: 32%;
     padding-top: -5%;
 }
-.card {
+#cards {
   padding-left: 40%;
   padding-bottom: 30%;
 }
+
 img#card1 {
   height: 400px;
   width: 250px;
 }
+
 img#card2 {
   height: 400px;
   width:  250px;
 }
+
 img#card3 {
   height: 400px;
   width:  250px;
 }
+
 p.text {
+  padding-top: 50px;
   padding-bottom: 40px;
+  right: 30px;
+  margin-left: 60%;
+  color: white;
+  font-size: 1.25em;
+  width: 35%;
+
 }
 div.footer a {
   position: fixed;
