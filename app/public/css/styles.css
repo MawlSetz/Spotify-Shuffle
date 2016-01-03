@@ -12,6 +12,7 @@ div.top {
   width: 10%;
   height: 100%;
   position: fixed;
+  min-width: 10%;
 /*  overflow: auto;*/
 }
 
@@ -28,8 +29,11 @@ ul.nav.navbar-nav {
 }
 
 a.btn.btn-default {
-
-  margin: 40px 30px 40px 400px;
+  margin-top: 17%;
+  margin-right: 45%;
+  margin-bottom: 10%;
+  margin-left: 85%;
+/*  padding-left: 60px;*/
 }
 div.content {
   padding: 2%;

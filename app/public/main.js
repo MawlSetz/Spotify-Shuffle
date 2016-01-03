@@ -260,7 +260,6 @@ function loading(access_token) {
 function loadingFinished() {
     $('#spotify-player').html('<iframe src="https://embed.spotify.com/?uri=spotify:user:' + user.id + ':playlist:'+ shufflePlaylist.id +'&theme=white" frameborder="0" allowtransparency="true"  width="640" height="720"></iframe>');
     $('#loading-gif').hide();
-    $('#welcome').html('<h3>Welcomes!' + user.name + "</h3>');
     $('#cards').hide();
 }
 
