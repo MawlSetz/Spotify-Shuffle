@@ -34,19 +34,6 @@ var shufflePlaylistId = "";
 //************************
 //  Logic Controllers
 //************************
-// function concadinateUris() {
-//     //for each item in newTracks array, add '{"uris": ["spotify:track:' + newTracks[0] + '", '
-//     //""
-//     //on last line add '"]}'
-//     for(i = 0; i < newTracks.length; i++){
-
-
-
-//     }
-//     //push each item into finUri
-//     //call populateNewPlaylist(api, token, playlist)
-
-// }
 
 function chopToLimit(api, token) {
     // send first 100 songs, then remove them from newTracks
@@ -262,6 +249,8 @@ function loadingFinished() {
     $('#loading-gif').hide();
     $('#cards').hide();
 }
+
+
 
 
 
