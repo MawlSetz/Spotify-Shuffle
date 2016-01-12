@@ -1,5 +1,5 @@
 body {
-  background-color: #00081f;
+  background-image: url('/images/whitePaperTexture.jpg');;
 }
 div.top {
   position: relative;
@@ -28,13 +28,26 @@ ul.nav.navbar-nav {
     border: none;
 }
 
-a.btn.btn-default {
+a.btn.btn-warning.active {
+  background-color: #2196F3;
+  border-color: #1976D2;
+  color: white;
   margin-top: 17%;
   margin-right: 45%;
   margin-bottom: 10%;
   margin-left: 85%;
+  font-family: 'Montserrat', sans-serif;
+  box-shadow: 0 3px 0 0 #007299;
 /*  padding-left: 60px;*/
 }
+/*
+.btn-success.raised:active, .btn-success.raised.active {
+    background: #33a6cc;
+    box-shadow: none;
+    margin-bottom: -3px;
+    margin-top: 3px;
+}*/
+
 div.content {
   padding: 2%;
 }
@@ -44,7 +57,7 @@ h1 {
   -ms-transform: rotate(270deg);
   -o-transform: rotate(270deg);
   transform: rotate(270deg);
-  color: #2fd566;
+  color: #2196F3;
   font-family: 'Montserrat', sans-serif;
   letter-spacing: 7px;
   padding: 30px -410px 10px -310px;
@@ -58,7 +71,7 @@ h1 {
 
 h2 {
   font-size: 3em;
-  color: #1ed760;
+  color: #2196F3;
   font-family: Proxima Nova;
   padding: 35px 10px 0px 180px;
   letter-spacing: 1px;
@@ -95,13 +108,22 @@ img#card3 {
   width:  250px;
 }
 
+div.progress {
+  margin-left: 15%;
+  color: #2196F3;
+}
+div.progress-bar {
+  background-color: #2196F3;
+  background-image: none;
+}
+
 p.text {
   padding-top: 50px;
   padding-bottom: 40px;
   right: 30px;
   margin-left: 60%;
-  color: white;
-  font-size: 1.25em;
+  color: #424242;
+  font-size: 18px;
   width: 35%;
 
 }

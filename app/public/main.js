@@ -1,6 +1,6 @@
 
 
-// Query string stuff. Ignore.
+// Query string stuff. 
 (function($) {
     $.QueryString = (function(a) {
         if (a == "") return {};
@@ -29,29 +29,17 @@ var currentPlaylistUris = [];
 var uris = [];
 var newTracks = [];
 var finUri = [];
-var shufflePlaylistId = "";
-
+var api = null;
+var value = 0;
+var pText = false;
 //************************
 //  Logic Controllers
 //************************
 
-function chopToLimit(api, token) {
-    // send first 100 songs, then remove them from newTracks
-    // if(newTracks.length < 100) {
-    //     finUri = newTracks.shift();
-    // } else {
-    //     //else cut into 100 song chunks
-    //     for(i=0; i<100; i++) {
-    //         finUri = newTracks.shift();
-    //     }
-    // }
-    tracks = ['spotify:track:0aULRU35N9kTj6O1xMULRR', 'spotify:track:78Iovnp3wffDDgbyNRVhuR', 'spotify:track:3SHxCaqhVMgQ5MDGrObjqo'];
-    populateNewPlaylist(api, token, tracks);
-}
-
-function populateNewPlaylist(api, token) {
-    // songs = songs[index].track.id
+function populateNewPlaylist() {
+    console.log("populateNewPlaylist");
     var tracks = [];
+    // Todo - "20" should be static variable, and should be 50?
     for (var i = 0; i < 20; i++) {
         if(songs.length > 0) {
             index = Math.floor(Math.random()*songs.length);
@@ -62,41 +50,44 @@ function populateNewPlaylist(api, token) {
             songs.splice(index, 1);
         } else {
             // This happens when everything is over
-            console.log(tracks);
             api.addTracksToPlaylist(user.id, shufflePlaylist.id, tracks);
             return true;
         }
     }
     
     api.addTracksToPlaylist(user.id, shufflePlaylist.id, tracks).then(function(data) {
-        populateNewPlaylist(api, token);
+        populateNewPlaylist();
     });
-}
-
-function replaceOldPlaylist(api, token) {  
-        populateNewPlaylist(api, token);
+    if (!loaded) {
         loaded = true;
         loadingFinished();
+    }
 }
 
-function createNewPlaylist(api, token) {
-    // create new playlist
+function createNewPlaylist() {
+    console.log("createNewPlaylist");
     api.createPlaylist(user.id, {"name":"SpotifyShuffle.com"}).then(function(data) {
-        console.log('Ok. Playlist created!');
+        console.log(data);
+        shufflePlaylist = data;
+        populateNewPlaylist();
     });
 
 }
 
 function doesPlaylistExist() {
+    thirdProgress();
+    console.log("doesPlaylistExist");
     if (shufflePlaylist) {
         return true;
+        
     }
     return false;
 }
 
 function getPlaylistId(playlist) {
+    console.log("getPlaylistId");
+    secondProgress();
     if(!doesPlaylistExist()) {
-        console.log(playlist.name);
         if(playlist.name === playlistName){
             shufflePlaylist = playlist;
             return true;
@@ -104,24 +95,8 @@ function getPlaylistId(playlist) {
     }
 }
 
-// function getCurrentSsPlaylistsUris(playlistId) {
-//     if(getPlaylistId()) {
-//         //get track uris from playlist them pass them to global variable currentPlaylistUris
-//         api.getPlaylistTracks(user.id, playlist.id, {offset: page, limit: 50}).then(function(data) {
-//             console.log(playlist.track.id);
-//         });
-//         //push them to currentPlaylistUris
-
-
-//     }
-// }
-
-function deletePlaylist(api, token) {
-    //  DELETE /v1/users/{user_id}/playlists/{playlist_id}/tracks  Remove tracks from a playlist
-    // https://developer.spotify.com/web-api/remove-tracks-playlist/
-    console.log('--- deletePlaylist');
-    console.log(shufflePlaylist);
-    console.log(shufflePlaylist.id);
+function deletePlaylist() {
+    console.log("deletePlaylist");
     var totalTracks = shufflePlaylist.tracks.total;
     if(totalTracks>0){
         var posArray = [];
@@ -133,63 +108,95 @@ function deletePlaylist(api, token) {
             totalTracks -= 100;
         }
         api.removeTracksFromPlaylistInPositions(user.id, shufflePlaylist.id, posArray, shufflePlaylist.snapshot_id).then(function(data) {
-            console.log("Got to line 112");
+            // Todo - wtf is this
         });
     } 
-    replaceOldPlaylist(api, token);
+    populateNewPlaylist();
 }
 
-
-
-function getSongs(api, token, page, playlist) {
+function getSongs(page, playlist) {
+    console.log("getSongs");
+    //call first loading bar function
+    firstProgress();
+    progressText();
     if(!playlist) {
         playlist = playlists.shift();
         getPlaylistId(playlist);
     }
-
     api.getPlaylistTracks(user.id, playlist.id, {offset: page, limit: 50}).then(function(data) {
         songs.push.apply(songs, data.items);
-
         if (data.items.length >= 50) {
-            getSongs(api, token, page+50, playlist);
+            getSongs(page+50, playlist);
         } else {
-            // This is where it finishes getting all the songs and kicks everythng off.
-            // Todo - Break this out into another LOGIC CONTROLLER
-            // Todo - From here call the new randomzie song list
+            // Once we grab all of the songs, kick off creating and filling new SpotifyShuffle.com Playlist
             if(playlists.length <= 0) {
                 if(doesPlaylistExist()) {
-                    deletePlaylist(api, token);
+                    deletePlaylist();
                 } else {
-                    createNewPlaylist(api, token);
-                    populateNewPlaylist(api, token);
-                    console.log("We DIDNT GET IT");
+                    createNewPlaylist();
                 }
-
             } else {
-                getSongs(api, token, 0, false);
+                getSongs(0, false);
             }
         }
-
     }, function(err) {
         console.log("Failed To Get Playlist: " + playlist.name);
-        getSongs(api, token, 0, false);
+        getSongs(0, false);
     });
 }
 
-function getPlaylists(api, token, page) {
-    api.getUserPlaylists(user.id, {offset: page, limit: 50}).then(function(data) {
-        console.log(data);
-        playlists.push.apply(playlists, data.items);
-        console.log('Length: ' + playlists.length)
+function progressText() {
+    if(pText = false) {
+        $('.progressText').append("<h4>Accessing your playlists<h4>");
+        pText = true;
+    }
+}
+function firstProgress() {
+    // Todo - Jquery -> % of progress bar
+    // Todo - 0 - 100
+    // Todo - CHanges "Loading Text" -> Getting Playlists
+    if(value <= 30) {
+        value = value + 1;
+        $('.progress-bar').css("width", value + "%");
+        progressText();
+    }
+}
 
-        // Todo Change the 50 to a hardcoded variable at the top. Change it everywhere you see 50.
+function secondProgress() {
+    if(value > 30 && value <= 60) {
+        value = value + 3;
+        $('.progress-bar').css("width", value + "%");
+        progressText();
+    }
+}
+
+function thirdProgress() {
+    if(value > 60 && value <= 100) {
+        value = value + 5;
+        $('.progress-bar').css("width", value + "%");
+        progressText();
+    }
+}
+
+function fourthProgress() {
+    if(value > 75 && value <= 100) {
+        value = value + 5;
+        $('.progress-bar').css("width", value + "%");
+        progressText();
+    }
+}
+
+function getPlaylists(page) {
+    console.log("getPlaylists");
+    firstProgress();
+    api.getUserPlaylists(user.id, {offset: page, limit: 50}).then(function(data) {
+        playlists.push.apply(playlists, data.items);
         if(data.items.length >= 50) {
-            getPlaylists(api, token, page+50);
+            getPlaylists(page+50);
         } else {
-            getSongs(api, token, 0);
+            getSongs(0);
             return true;
         }
-
     }, function(err) {
         console.error(err);
         error = err;
@@ -197,18 +204,16 @@ function getPlaylists(api, token, page) {
     });
 }
 
-function getUser(api, access_token) {
-     api.getMe(api).then(function(data) {
-            user = data;
-            // console.log(user);
-
-            getPlaylists(api, access_token, 0);
-
-            }, function(err) {
-                console.error('user is not logged in');
-                error = err;
-                return false;
-            });
+function getUser() {
+    console.log("getUser");
+    api.getMe().then(function(data) {
+        user = data;
+        getPlaylists(0);
+    }, function(err) {
+        console.error('user is not logged in');
+        error = err;
+        return false;
+    });
 }
 
 //************************
@@ -216,14 +221,13 @@ function getUser(api, access_token) {
 //************************
 function login() {
     // Todo - If this is called it should return the entire screen to the *login* state.
-
 }
 
 function loading(access_token) {
+    console.log("loading page state controller")
     $( document ).ready(function() {
         $('#cards').removeClass('hidden');
         $('.button').addClass('hidden');
-
     });
 
     //green sock animation ----------------------------------
@@ -237,34 +241,29 @@ function loading(access_token) {
     var card3Tween = new TweenMax.to(card3, 2, {scale:0.5, repeat:-1, yoyo:true, bezier:{values:[{x:-400, y:250}, {x:-700, y:375}, {x:-900, y:500}]}, ease:Power1.easeOut});
     //-------------------------------------------
 
-    var spotifyApi = new SpotifyWebApi();
-    spotifyApi.setAccessToken(access_token);
-    getUser(spotifyApi, access_token, 0);
-
-
 }
 
 function loadingFinished() {
+    console.log("loadingFinished")
+    $('.progress').hide();
     $('#spotify-player').html('<iframe src="https://embed.spotify.com/?uri=spotify:user:' + user.id + ':playlist:'+ shufflePlaylist.id +'&theme=white" frameborder="0" allowtransparency="true"  width="640" height="720"></iframe>');
     $('#loading-gif').hide();
     $('#cards').hide();
 }
 
-
-
-
-
 //************************
-//  Main Jquery Function 
+//  Main jQuery Function 
 //************************
 $(function(){
     var access_token = $.QueryString["access_token"];
     if (access_token != null) {
         loading(access_token);
+        api = new SpotifyWebApi();
+        api.setAccessToken(access_token);
+        getUser();
     } else {
         login();
     }
-        
 
     // Todo - If loaded is true do whatever you need to do.
     // Todo - If error show the error to user. Ask them to retry maybe.
