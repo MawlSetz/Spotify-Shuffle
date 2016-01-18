@@ -40,7 +40,14 @@ function populateNewPlaylist() {
     console.log("populateNewPlaylist");
     var tracks = [];
     // Todo - "20" should be static variable, and should be 50?
-    for (var i = 0; i < 20; i++) {
+    console.log(songs.length);
+    if(songs.length <= 0) {
+        loaded = true;
+        loadingFinished();
+        return true;
+    }
+
+    for (var i = 0; i < 50; i++) {
         if(songs.length > 0) {
             index = Math.floor(Math.random()*songs.length);
             // Todo - Why are we getting null ids
@@ -48,20 +55,19 @@ function populateNewPlaylist() {
                 tracks.push('spotify:track:' + songs[index].track.id);
             }
             songs.splice(index, 1);
-        } else {
-            // This happens when everything is over
-            api.addTracksToPlaylist(user.id, shufflePlaylist.id, tracks);
-            return true;
         }
     }
     
+    console.log("populateNewPlaylist TRY AGAIN");
     api.addTracksToPlaylist(user.id, shufflePlaylist.id, tracks).then(function(data) {
+        console.log("populateNewPlaylist Callback");
         populateNewPlaylist();
+        // if (!loaded) {
+        //     loaded = true;
+        //     loadingFinished();
+        // }
     });
-    if (!loaded) {
-        loaded = true;
-        loadingFinished();
-    }
+
 }
 
 function createNewPlaylist() {
@@ -93,11 +99,18 @@ function getPlaylistId(playlist) {
             return true;
         }
     }
+    return false;
 }
 
 function deletePlaylist() {
     console.log("deletePlaylist");
     var totalTracks = shufflePlaylist.tracks.total;
+    console.log("totalTracks: " + totalTracks);
+    console.log("Check The Data FIRST");
+    console.log(shufflePlaylist.id);
+    console.log(posArray);
+    console.log(shufflePlaylist.snapshot_id);
+
     if(totalTracks>0){
         var posArray = [];
         for(i=0; i<totalTracks; i++) {
@@ -107,11 +120,16 @@ function deletePlaylist() {
             posArray.slice(Math.max(0, totalTracks-100), totalTracks);
             totalTracks -= 100;
         }
+        console.log("Check The Data RIGHT BEFORE DELETE");
+        console.log(shufflePlaylist.id);
+        console.log(posArray);
+        console.log(shufflePlaylist.snapshot_id);
         api.removeTracksFromPlaylistInPositions(user.id, shufflePlaylist.id, posArray, shufflePlaylist.snapshot_id).then(function(data) {
-            // Todo - wtf is this
+            populateNewPlaylist();
         });
-    } 
-    populateNewPlaylist();
+    } else {
+        populateNewPlaylist();
+    }
 }
 
 function getSongs(page, playlist) {
@@ -119,30 +137,36 @@ function getSongs(page, playlist) {
     //call first loading bar function
     firstProgress();
     progressText();
+    var playlistFound = false;
     if(!playlist) {
         playlist = playlists.shift();
-        getPlaylistId(playlist);
+        playlistFound = getPlaylistId(playlist);
     }
-    api.getPlaylistTracks(user.id, playlist.id, {offset: page, limit: 50}).then(function(data) {
-        songs.push.apply(songs, data.items);
-        if (data.items.length >= 50) {
-            getSongs(page+50, playlist);
-        } else {
-            // Once we grab all of the songs, kick off creating and filling new SpotifyShuffle.com Playlist
-            if(playlists.length <= 0) {
-                if(doesPlaylistExist()) {
-                    deletePlaylist();
-                } else {
-                    createNewPlaylist();
-                }
+
+    if(!playlistFound) {
+        api.getPlaylistTracks(user.id, playlist.id, {offset: page, limit: 50}).then(function(data) {
+            songs.push.apply(songs, data.items);
+            if (data.items.length >= 50) {
+                getSongs(page+50, playlist);
             } else {
-                getSongs(0, false);
+                // Once we grab all of the songs, kick off creating and filling new SpotifyShuffle.com Playlist
+                if(playlists.length <= 0) {
+                    if(doesPlaylistExist()) {
+                        deletePlaylist();
+                    } else {
+                        createNewPlaylist();
+                    }
+                } else {
+                    getSongs(0, false);
+                }
             }
-        }
-    }, function(err) {
-        console.log("Failed To Get Playlist: " + playlist.name);
+        }, function(err) {
+            console.log("Failed To Get Playlist: " + playlist.name);
+            getSongs(0, false);
+        });
+    } else {
         getSongs(0, false);
-    });
+    }
 }
 
 function progressText() {
