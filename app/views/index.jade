@@ -4,6 +4,7 @@ html
     meta(charset='utf-8')
     meta(http-equiv='X-UA-Compatible', content='IE=edge')
     meta(name='viewport', content='width=device-width, initial-scale=1')
+    link(rel='icon', href='/images/favicon.ico')
     script(src='https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js')
     script(src='/spotify-web-api.js')
     script(src='/main.js')
@@ -16,29 +17,32 @@ html
 
 
 body
-  div.top
-    .sidebar
-      a.logo(href='/')
-      img(src='/images/shuffleLogoBlue2.png', class='logo')
-      h1 Spotify  Shuffle
+  .top
+    .arrow.col-md-11.col-lg-11
+      p.topText Use this handy tool to shuffle through all of your Spotify playlists.
+      p.topText2 Click below to begin
+      img.col-lg-8(src='/images/downArrowCircle_white.png')
+  .sidebar.col-xs-8.col-sm-6
+    a.logo(href='/')
+    img(src='/images/shuffleLogoBlue2.png', class='logo')
+    h1 Spotify  Shuffle
 .content
-  div.button
-    a.btn.btn-warning.active(href='/login') Log in with Spotify
+  .button.row
+    a.btn.btn-warning.col-lg-8.active(href='/login') Click here to begin
   br
   h3
   #welcome
   #loading-gif
   .banner
   h2
-  div.progressText
-  .progress
-    .progress-bar(role='progressbar', aria-valuenow='60', aria-valuemin='0', aria-valuemax='100', style='width: 0%;')
-    span.sr-only % Complete
+  .progressText.col-xs-5.col-sm-8.col-md-10.col-lg-10
   #spotify-player
-  div#cards.hidden
-      img#card1(src='/images/noteCard.png')
-      img#card2(src='/images/noteCard2.png')
-      img#card3(src='/images/noteCard3.png')
-  p.text Shuffle your spotify playlists with this tool. It's easy to be overzealous when adding songs to your collection -- and don't want to piece through all your files. Enjoy rediscovering all the weird tunes in your archive. 
-div.footer
-  a(href='https://github.com/MawlSetz/Spotify-Shuffle') View Source on Github
+  div.scribble
+  .row
+    .container
+      .bottoms
+        a.text.col-lg-9(href='https://github.com/MawlSetz/Spotify-Shuffle') View Source
+  .row
+    .container
+      a.col-lg-7(href='https://github.com/MawlSetz/Spotify-Shuffle')
+        img.link(src='/images/octocat.png')

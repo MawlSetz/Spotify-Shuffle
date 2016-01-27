@@ -1,6 +1,6 @@
 
 
-// Query string stuff. 
+// Query string stuff.
 (function($) {
     $.QueryString = (function(a) {
         if (a == "") return {};
@@ -14,7 +14,7 @@
         })(window.location.search.substr(1).split('&'))
 })(jQuery);
 
-// Global Variables 
+// Global Variables
 var playlists = [];
 var songs = [];
 var song_string = "";
@@ -32,6 +32,8 @@ var finUri = [];
 var api = null;
 var value = 0;
 var pText = false;
+var pText2 = false;
+var pText3 = false;
 //************************
 //  Logic Controllers
 //************************
@@ -57,7 +59,7 @@ function populateNewPlaylist() {
             songs.splice(index, 1);
         }
     }
-    
+
     console.log("populateNewPlaylist TRY AGAIN");
     api.addTracksToPlaylist(user.id, shufflePlaylist.id, tracks).then(function(data) {
         console.log("populateNewPlaylist Callback");
@@ -85,7 +87,7 @@ function doesPlaylistExist() {
     console.log("doesPlaylistExist");
     if (shufflePlaylist) {
         return true;
-        
+
     }
     return false;
 }
@@ -136,7 +138,9 @@ function getSongs(page, playlist) {
     console.log("getSongs");
     //call first loading bar function
     firstProgress();
-    progressText();
+    //();
+
+    console.log("called progressText");
     var playlistFound = false;
     if(!playlist) {
         playlist = playlists.shift();
@@ -169,46 +173,51 @@ function getSongs(page, playlist) {
     }
 }
 
-function progressText() {
-    if(pText = false) {
-        $('.progressText').append("<h4>Accessing your playlists<h4>");
-        pText = true;
-    }
-}
+// function progressText() {
+//     if(pText === false) {
+//         $('.progressText').append("<h4>Accessing your playlists<h4>");
+//         pText = true;
+//     }
+// }
+
+
+
+// *********************************************
+// Progress Bar
+// *********************************************
+
 function firstProgress() {
-    // Todo - Jquery -> % of progress bar
-    // Todo - 0 - 100
-    // Todo - CHanges "Loading Text" -> Getting Playlists
-    if(value <= 30) {
-        value = value + 1;
-        $('.progress-bar').css("width", value + "%");
-        progressText();
+  if(value <= 30) {
+    if(pText === false) {
+      value = value + 10;
+      $('.progressText').append("<h4>Accessing your playlists<h4>");
+      pText = true;
+      secondProgress();
     }
+  }
 }
 
 function secondProgress() {
-    if(value > 30 && value <= 60) {
-        value = value + 3;
-        $('.progress-bar').css("width", value + "%");
-        progressText();
+  // if(value > 30 && value <= 60) {
+    if(pText2 === false) {
+      // value = value + 3;
+      $('.progressText').delay(3000).append("<h4>Shuffling your tunes<h4>");
+      pText2 = true;
+      thirdProgress();
     }
+  // }
 }
 
 function thirdProgress() {
-    if(value > 60 && value <= 100) {
-        value = value + 5;
-        $('.progress-bar').css("width", value + "%");
-        progressText();
+  // if(value > 60 && value <= 100) {
+    if(pText3 === false) {
+      // value = value + 5;
+      $('.progressText').append("<h4>Creating your new playlist<h4>");
+      pText3 = true;
     }
+  // }
 }
 
-function fourthProgress() {
-    if(value > 75 && value <= 100) {
-        value = value + 5;
-        $('.progress-bar').css("width", value + "%");
-        progressText();
-    }
-}
 
 function getPlaylists(page) {
     console.log("getPlaylists");
@@ -241,7 +250,7 @@ function getUser() {
 }
 
 //************************
-//  Page State Controllers 
+//  Page State Controllers
 //************************
 function login() {
     // Todo - If this is called it should return the entire screen to the *login* state.
@@ -254,29 +263,30 @@ function loading(access_token) {
         $('.button').addClass('hidden');
     });
 
-    //green sock animation ----------------------------------
-    var card1 = document.getElementById("card1");
-    var card1Tween = new TweenMax.to(card1, 2, {scale:0.5, repeat:-1, yoyo:true, bezier:{values:[{x:100, y:250}, {x:200, y:375}, {x:300, y:500}]}, ease:Power1.easeOut});
+    // //green sock animation ----------------------------------
+    // var card1 = document.getElementById("card1");
+    // var card1Tween = new TweenMax.to(card1, 2, {scale:0.5, repeat:-1, yoyo:true, bezier:{values:[{x:100, y:250}, {x:200, y:375}, {x:300, y:500}]}, ease:Power1.easeOut});
 
-    var card2 = document.getElementById("card2");
-    var card2Tween = new TweenMax.to(card2, 2, {scale:0.5, repeat:-1, yoyo:true, bezier:{values:[{x:-100, y:250}, {x:-200, y:375}, {x:-300, y:500}]}, ease:Power1.easeOut});
+    // var card2 = document.getElementById("card2");
+    // var card2Tween = new TweenMax.to(card2, 2, {scale:0.5, repeat:-1, yoyo:true, bezier:{values:[{x:-100, y:250}, {x:-200, y:375}, {x:-300, y:500}]}, ease:Power1.easeOut});
 
-    var card3 = document.getElementById("card3");
-    var card3Tween = new TweenMax.to(card3, 2, {scale:0.5, repeat:-1, yoyo:true, bezier:{values:[{x:-400, y:250}, {x:-700, y:375}, {x:-900, y:500}]}, ease:Power1.easeOut});
-    //-------------------------------------------
+    // var card3 = document.getElementById("card3");
+    // var card3Tween = new TweenMax.to(card3, 2, {scale:0.5, repeat:-1, yoyo:true, bezier:{values:[{x:-400, y:250}, {x:-700, y:375}, {x:-900, y:500}]}, ease:Power1.easeOut});
+    // //-------------------------------------------
 
 }
 
 function loadingFinished() {
     console.log("loadingFinished")
     $('.progress').hide();
+    $('.progressText').hide();
     $('#spotify-player').html('<iframe src="https://embed.spotify.com/?uri=spotify:user:' + user.id + ':playlist:'+ shufflePlaylist.id +'&theme=white" frameborder="0" allowtransparency="true"  width="640" height="720"></iframe>');
     $('#loading-gif').hide();
     $('#cards').hide();
 }
 
 //************************
-//  Main jQuery Function 
+//  Main jQuery Function
 //************************
 $(function(){
     var access_token = $.QueryString["access_token"];
@@ -299,11 +309,10 @@ $(function(){
 
 
     // Features - Harder
-    // Todo - Make it so you can select how many songs you want to randomize. Up to around 300ish. 
+    // Todo - Make it so you can select how many songs you want to randomize. Up to around 300ish.
     // Todo - Make it so you can select how long you want the playlist to be. 40 Mins? Count the track lengths till you get close.
     // Todo - Make it so you can save create and update playlists. Ask me about this. I can point you in the right direction.
-    // Todo - Create an about page. Link to your github. Say you dont store any data locally. 
+    // Todo - Create an about page. Link to your github. Say you dont store any data locally.
 
-    
+
 });
-
