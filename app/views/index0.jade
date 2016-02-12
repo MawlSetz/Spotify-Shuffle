@@ -1,0 +1,49 @@
+html
+  head
+    title= title
+    meta(charset='utf-8')
+    meta(http-equiv='X-UA-Compatible', content='IE=edge')
+    meta(name='viewport', content='width=device-width, initial-scale=1')
+    link(rel='icon', href='/images/favicon.ico')
+    script(src='https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js')
+    script(src='/spotify-web-api.js')
+    script(src='/main.js')
+    link(href='https://fonts.googleapis.com/css?family=Montserrat:400,700', rel='stylesheet', type='text/css')
+    link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css')
+    link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css')
+    script(src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js')
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/gsap/1.18.0/TweenMax.min.js')
+    link(href='http://pingendo.github.io/pingendo-bootstrap/themes/default/bootstrap.css', rel='stylesheet', type='text/css')
+    link(href='/css/styles.css', rel='stylesheet')
+
+
+body
+  .top
+    .arrow.col-md-11.col-lg-11
+      p.topText Use this handy tool to shuffle through all of your Spotify playlists.
+      p.topText2 Click below to begin
+      img.col-lg-8(src='/images/downArrowCircle_white.png')
+  .sidebar.col-xs-8.col-sm-6
+    a.logo(href='/')
+    img(src='/images/shuffleLogoBlue2.png', class='logo')
+    h1 Spotify  Shuffle
+    .content
+  .button.row
+    a.btn.btn-warning.col-lg-8.active(href='/login') Click here to begin
+  br
+  h3
+  #welcome
+  #loading-gif
+  .banner
+  h2
+  .progressText.col-xs-5.col-sm-8.col-md-10.col-lg-10
+  #spotify-player
+  //- .scribble
+  //- .bottoms
+  .container
+    .row
+      a.col-xs-1.col-sm-3.col-md-6.col-lg-12(href='https://github.com/MawlSetz/Spotify-Shuffle')
+        img.link(src='/images/octocat.png')
+  .container
+    .row
+      a.col-xs-1.col-sm-3.col-md-6.col-lg-12.source(href='https://github.com/MawlSetz/Spotify-Shuffle') View Source

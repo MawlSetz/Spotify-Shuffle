@@ -13,36 +13,77 @@ html
     link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css')
     script(src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js')
     script(src='https://cdnjs.cloudflare.com/ajax/libs/gsap/1.18.0/TweenMax.min.js')
-    link(href='/css/styles.css', rel='stylesheet')
-
-
-body
-  .top
-    .arrow.col-md-11.col-lg-11
-      p.topText Use this handy tool to shuffle through all of your Spotify playlists.
-      p.topText2 Click below to begin
-      img.col-lg-8(src='/images/downArrowCircle_white.png')
-  .sidebar.col-xs-8.col-sm-6
-    a.logo(href='/')
-    img(src='/images/shuffleLogoBlue2.png', class='logo')
-    h1 Spotify  Shuffle
-.content
-  .button.row
-    a.btn.btn-warning.col-lg-8.active(href='/login') Click here to begin
-  br
-  h3
-  #welcome
-  #loading-gif
-  .banner
-  h2
-  .progressText.col-xs-5.col-sm-8.col-md-10.col-lg-10
-  #spotify-player
-  div.scribble
-  .row
-    .container
-      .bottoms
-        a.text.col-lg-9(href='https://github.com/MawlSetz/Spotify-Shuffle') View Source
-  .row
-    .container
-      a.col-lg-7(href='https://github.com/MawlSetz/Spotify-Shuffle')
-        img.link(src='/images/octocat.png')
+    link(href='http://pingendo.github.io/pingendo-bootstrap/themes/default/bootstrap.css', rel='stylesheet', type='text/css')
+    link(href='http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css', rel='stylesheet', type='text/css')
+    link(href='http://pingendo.github.io/pingendo-bootstrap/themes/default/bootstrap.css', rel='stylesheet', type='text/css')
+    link(href='/css/styles2.css', rel='stylesheet')
+  
+  body
+    .cover
+      .navbar
+        .container
+          .navbar-header
+            button.navbar-toggle(type='button', data-toggle='collapse', data-target='#navbar-ex-collapse')
+              span.sr-only Toggle navigation
+              span.icon-bar
+              span.icon-bar
+              span.icon-bar
+          #navbar-ex-collapse.collapse.navbar-collapse
+            ul.nav.navbar-nav.navbar-right
+              li
+                #about
+                  //- a(href='#') About
+      .background-image-fixed.cover-image(style="background-image : url('http://i.imgur.com/nOGtKJr.jpg')")
+      .container
+        .row
+          .col-md-12.text-center.top
+            img(src='http://i.imgur.com/q62fWaC.png')
+            h1.text-warning Spotify Shuffle
+            p.text-warning Use this handy tool to shuffle through your Spotify playlists
+            br
+            br
+            .buttonA
+              a.btn.btn-warning.btn-block.btn-lg.col-lg-8.active(href='/login') Click here to begin
+              //- a.btn.btn-block.btn-lg.btn-warning Click here to begin
+            #spotify-player
+            #loading-gif
+    .section
+      .container
+        .row
+          .col-md-12
+            a(href='https://github.com/MawlSetz/Spotify-Shuffle')
+              img.img-responsive.octocat(src='/images/sidewaysOctocat2.png')
+    .section
+      .container
+        .row
+          #scrollTarget
+          .col-md-6
+            img.img-responsive(src='/images/navyAndiFrame2.png')
+          .col-md-6
+            h1.text-primary A way to shuffle your tunes
+            h3 simply . . .
+            p
+              | Sometimes you need a simple way to shuffle through your tunes. If you're
+              | like me, maybe you've been overzealous in your collection of Spotify playlists,
+              | and want to discover the songs you favorited and forgot.
+            br
+            br
+            br
+            br
+            a(href='https://github.com/MawlSetz/Spotify-Shuffle')
+              p View source code on github.
+    //- .section
+    //-   .container
+    //-     .row
+    //-       .col-md-6
+    //-         h1.text-primary
+    //-           | About Me
+    //-           br
+    //-         h3 Developer & Designer
+    //-         p(contenteditable='true')
+    //-           | If you're reading this, you are probably a potential employer that I have
+    //-           | sent this project to as proof of my skills. You can see more at mollysetzer.com
+    //-       .col-md-6
+    //-         img.center-block.img-circle.img-responsive(src='http://i.imgur.com/LcsOLH6.png')
+    //- .section
+    //-   .container

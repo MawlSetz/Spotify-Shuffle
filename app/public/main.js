@@ -34,6 +34,7 @@ var value = 0;
 var pText = false;
 var pText2 = false;
 var pText3 = false;
+var gif = false;
 //************************
 //  Logic Controllers
 //************************
@@ -140,7 +141,6 @@ function getSongs(page, playlist) {
     firstProgress();
     //();
 
-    console.log("called progressText");
     var playlistFound = false;
     if(!playlist) {
         playlist = playlists.shift();
@@ -180,42 +180,43 @@ function getSongs(page, playlist) {
 //     }
 // }
 
-
+function loadingGif() {
+  if(gif === false) {
+    $('.loadingGif').html("<img src='loadingLoop.gif'>")
+    gif = true;
+  }
+}
 
 // *********************************************
 // Progress Bar
 // *********************************************
 
 function firstProgress() {
-  if(value <= 30) {
-    if(pText === false) {
+  if(value <= 30 && pText === false) {
       value = value + 10;
       $('.progressText').append("<h4>Accessing your playlists<h4>");
       pText = true;
-      secondProgress();
-    }
   }
 }
 
 function secondProgress() {
-  // if(value > 30 && value <= 60) {
+  if(value > 30 && value <= 60) {
     if(pText2 === false) {
-      // value = value + 3;
+      value = value + 3;
       $('.progressText').delay(3000).append("<h4>Shuffling your tunes<h4>");
       pText2 = true;
-      thirdProgress();
     }
-  // }
+  }
 }
 
 function thirdProgress() {
-  // if(value > 60 && value <= 100) {
+  if(value > 60 && value <= 100) {
     if(pText3 === false) {
-      // value = value + 5;
+      value = value + 5;
       $('.progressText').append("<h4>Creating your new playlist<h4>");
       pText3 = true;
     }
-  // }
+  }
 }
 
 
@@ -254,13 +255,18 @@ function getUser() {
 //************************
 function login() {
     // Todo - If this is called it should return the entire screen to the *login* state.
+  $(document).ready(function() {
+    $( "#about" ).click(function() {
+      $( "#scrollTarget" ).scroll();
+    });
+  });
 }
 
 function loading(access_token) {
     console.log("loading page state controller")
     $( document ).ready(function() {
-        $('#cards').removeClass('hidden');
-        $('.button').addClass('hidden');
+      $('#loading-gif').html('<img src="/images/loadingLoop.gif", class="loadingGif">');
+      $('.buttonA').addClass('hidden');
     });
 
     // //green sock animation ----------------------------------
@@ -289,15 +295,15 @@ function loadingFinished() {
 //  Main jQuery Function
 //************************
 $(function(){
-    var access_token = $.QueryString["access_token"];
-    if (access_token != null) {
-        loading(access_token);
-        api = new SpotifyWebApi();
-        api.setAccessToken(access_token);
-        getUser();
-    } else {
-        login();
-    }
+  var access_token = $.QueryString["access_token"];
+  if (access_token != null) {
+    loading(access_token);
+    api = new SpotifyWebApi();
+    api.setAccessToken(access_token);
+    getUser();
+  } else {
+    login();
+  }
 
     // Todo - If loaded is true do whatever you need to do.
     // Todo - If error show the error to user. Ask them to retry maybe.

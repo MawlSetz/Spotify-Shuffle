@@ -1,0 +1,18 @@
+img.img-responsive.octocat.octocat {
+  height: 200px;
+  width: auto;
+  margin-left: 110%;
+  position: fixed;
+}
+
+#spotify-player {
+  margin: 100px;
+}
+
+.col-md-12.text-center.top {
+  margin-top: 30px;
+}
+
+#loading-gif {
+  margin: 50px;
+}
